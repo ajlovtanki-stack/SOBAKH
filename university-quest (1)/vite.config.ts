@@ -206,6 +206,7 @@ function vitePluginStorageProxy(): Plugin {
 const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
 
 export default defineConfig({
+  base: '/university-quest/', // <--- Add this line
   plugins,
   resolve: {
     alias: {
