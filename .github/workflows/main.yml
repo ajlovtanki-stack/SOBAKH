@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # Set a branch to deploy from
+      - main
 
 jobs:
   deploy:
@@ -15,41 +15,26 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22' # Updated to Node.js 22
+          node-version: '22'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 10 # Using pnpm version 10 as specified in package.json
-          run_install: false # We will run install manually to ensure correct working directory
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "PNPM_CACHE_STORE=$(pnpm store path)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.PNPM_CACHE_STORE }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
+          version: 10
+          run_install: false
 
       - name: Install dependencies
+        # Use quotes to handle the space in the folder name
         run: pnpm install --frozen-lockfile
-        working-directory: .
+        working-directory: "./university-quest (1)"
 
       - name: Build client-side application
         run: pnpm run build
-        working-directory: .
+        working-directory: "./university-quest (1)"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/public # The directory where Vite builds the client-side app
-          # For a project page, you might need to set a base URL in vite.config.ts
-          # For a user/organization page, this is usually not needed.
-          # If your GitHub Pages URL is like username.github.io/repo-name/, you'll need:
-          # base: '/repo-name/' in vite.config.ts
+          # Path to the build output inside the subfolder
+          publish_dir: "./university-quest (1)/client/dist/public"
