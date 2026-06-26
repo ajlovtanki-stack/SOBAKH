@@ -24,7 +24,6 @@ jobs:
           run_install: false
 
       - name: Install dependencies
-        # Use quotes to handle the space in the folder name
         run: pnpm install --frozen-lockfile
         working-directory: "./university-quest (1)"
 
@@ -36,5 +35,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # Path to the build output inside the subfolder
-          publish_dir: "./university-quest (1)/client/dist/public"
+          # Corrected path based on your Vite config
+          publish_dir: "./university-quest (1)/dist/public"
